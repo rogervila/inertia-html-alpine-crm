@@ -42,7 +42,7 @@ class TodoController extends Controller
 
         return redirect()
             ->route('todos.index')
-            ->with('status', 'Todo #' . $todo->id . ' has been updated!');
+            ->with('status', 'Todo #' . $todo->id . ' has been created!');
     }
 
     /**

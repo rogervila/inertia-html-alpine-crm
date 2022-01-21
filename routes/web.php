@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class);
 Route::resource('/todos', TodoController::class);
+
+Route::get('/500', function () {
+    throw new \Exception('500 Error demo');
+});
