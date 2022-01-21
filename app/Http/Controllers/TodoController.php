@@ -38,9 +38,11 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        Todo::create(['title' => $request->get('title')]);
+        $todo = Todo::create(['title' => $request->get('title')]);
 
-        return redirect()->route('todos.index');
+        return redirect()
+            ->route('todos.index')
+            ->with('status', 'Todo #' . $todo->id . ' has been updated!');
     }
 
     /**
@@ -84,7 +86,9 @@ class TodoController extends Controller
             ]);
         }
 
-        return redirect()->route('todos.index');
+        return redirect()
+            ->route('todos.index')
+            ->with('status', 'Todo #' . $todo->id . ' has been updated!');
     }
 
     /**
@@ -101,6 +105,8 @@ class TodoController extends Controller
 
         $todo->delete();
 
-        return redirect()->route('todos.index');
+        return redirect()
+            ->route('todos.index')
+            ->with('status', 'Todo #' . $todo->id . ' has been deleted!');
     }
 }

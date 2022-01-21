@@ -1,10 +1,20 @@
 <div x-data="AlpineLayout">
+    <div style="position: fixed; bottom: 0; right: 0; z-index: 9999;" role="alert" x-transition
+        x-show="showNotification" class="message is-link m-5">
+        <div class="message-header">
+            <p>Message</p>
+            <button x-on:click="showNotification = false" class="delete" aria-label="delete"></button>
+        </div>
+        <div class="message-body" x-text="notification"></div>
+    </div>
+
     <header class="hero is-link">
         <div class="hero-body">
             <h1 class="title" x-text="title"></h1>
             <p class="subtitle" x-text="subtitle"></p>
         </div>
     </header>
+
     <div class="columns">
         <div class="column is-narrow">
             <nav class="menu px-5 pt-6">
@@ -23,6 +33,7 @@
             <main style="min-height: 73vh;" data-inertia-slot></main>
         </div>
     </div>
+
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
@@ -37,10 +48,21 @@
 <script>
     function AlpineLayout() {
         return {
+            init: function () {
+                if (Inertia.page.props.status !== null) {
+                    this.notification = Inertia.page.props.status
+                    this.showNotification = true
+                    setTimeout(() => {
+                        this.showNotification = false
+                    }, 3000)
+                }
+            },
             title: 'CRM',
             subtitle: 'CRM Example with Inertia and Alpine',
             company: 'ACME',
-            year: new Date().getFullYear()
+            year: new Date().getFullYear(),
+            showNotification: false,
+            notification: '',
         }
     }
 </script>
