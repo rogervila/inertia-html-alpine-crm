@@ -14,6 +14,8 @@
     },
     "dependencies": {
         "@inertiajs/inertia": "^0.11.0",
+        "alpinejs": "^3.8.1",
+        "bulma": "^0.9.3",
         "inertia-html": "^0.3.0"
     }
 }
