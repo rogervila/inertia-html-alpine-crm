@@ -1,0 +1,105 @@
+<div data-inertia-extends="Layout">
+    <section class="section" x-data="AlpineTodoIndex">
+        <h2 class="title">TODO List</h2>
+
+        <form x-on:submit="createTodo" class="field has-addons">
+            <div class="control">
+                <input class="input" type="text" placeholder="Write a new todo" x-model="newTodoTitle">
+            </div>
+            <div class="control">
+                <input type="submit" class="button is-link" value="Create">
+            </div>
+        </form>
+
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Created at</th>
+                    <th>Completed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="todo in todos">
+                    <tr>
+                        <td x-text="todo.id"></td>
+                        <td x-text="todo.title"></td>
+                        <td x-text="todo.created_at"></td>
+                        <td>
+                            <input type="checkbox" x-on:change="updateTodo(todo.id)"
+                                x-bind:checked="todo.completed_at !== null">
+                        </td>
+                        <td class="is-flex">
+                            <div class="buttons are-small">
+                                <button class="button is-danger" x-on:click="deleteTodo(todo.id)">Delete</button>
+                            </div>
+
+                            <!-- This would be the Alpine version without Inertia -->
+
+                            <!--
+                            <form x-bind:action="'/todos/' + todo.id" method="post">
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="_token" x-bind:value="document.querySelector('meta[name="csrf_token"]').content">
+                                <input type="hidden" name="completed"
+                                    x-bind:value="null !== todo.completed_at ? '0' : '1'">
+                                <input class="button" type="submit"
+                                    x-bind:value="'Mark as ' + (null !== todo.completed_at ? 'incompleted' : 'completed')">
+                            </form>
+                            -->
+
+                            <!--
+                            <form x-on:submit="submit" x-bind:action="'/todos/' + todo.id" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" x-bind:value="document.querySelector('meta[name="csrf_token"]').content">
+                                <input class="button" type="submit" value="Delete">
+                            </form>
+                            -->
+
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <ul>
+                            <li>Total todos: <strong x-text="todos.length"></strong></li>
+                            <li>Completed todos: <strong
+                                    x-text="todos.filter(todo => todo.completed_at !== null).length"></strong></li>
+                        </ul>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+</div>
+
+<script>
+    function Todo_Index() {
+        console.log('Todo_Index!')
+    }
+
+    function AlpineTodoIndex() {
+        return {
+            newTodoTitle: '',
+            todos: Inertia.page.props.todos,
+            updateTodo: function (id) {
+                Inertia.put('/todos/' + id, {
+                    toggle: true
+                })
+            },
+            deleteTodo: function (id) {
+                Inertia.delete('/todos/' + id)
+            },
+            createTodo: function (e) {
+                e.preventDefault();
+                let title = this.newTodoTitle
+                this.newTodoTitle = ''
+
+                Inertia.post('/todos', { title })
+            }
+        }
+    }
+</script>

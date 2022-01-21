@@ -1,0 +1,46 @@
+<div x-data="AlpineLayout">
+    <header class="hero is-link">
+        <div class="hero-body">
+            <h1 class="title" x-text="title"></h1>
+            <p class="subtitle" x-text="subtitle"></p>
+        </div>
+    </header>
+    <div class="columns">
+        <div class="column is-narrow">
+            <nav class="menu px-5 pt-6">
+                <p class="menu-label">
+                    CRM
+                </p>
+                <ul class="menu-list">
+                    <li><a x-bind:class="window.location.pathname === '/' ? 'is-active' : ''" data-inertia-link
+                            href="/">Dashboard</a></li>
+                    <li><a x-bind:class="window.location.pathname.startsWith('/todos') ? 'is-active' : ''"
+                            data-inertia-link href="/todos">Todos</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="column">
+            <main style="min-height: 73vh;" data-inertia-slot></main>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                &copy;
+                <span notranslate x-text="company"></span>
+                <time x-text="year"></time>
+            </p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    function AlpineLayout() {
+        return {
+            title: 'CRM',
+            subtitle: 'CRM Example with Inertia and Alpine',
+            company: 'ACME',
+            year: new Date().getFullYear()
+        }
+    }
+</script>
