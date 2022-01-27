@@ -1,0 +1,53 @@
+<div class="container is-fluid" data-inertia-extends="Layout">
+    <section class="section" x-data="AlpineLogin">
+        <h2 class="title">Login</h2>
+
+        <form x-on:submit="login">
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="email" placeholder="your@email.com" x-model="email">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="******" x-model="password">
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <input type="submit" class="button is-link" value="Login">
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+<script>
+    function AlpineLogin() {
+        return {
+            email: 'test@test.com',
+            password: 'secret',
+            login: function (e) {
+                e.preventDefault()
+
+                var email = this.email
+                var password = this.password
+
+                this.email = ''
+                this.password = ''
+
+                Inertia.post('/login', {
+                    email, password
+                })
+            }
+        }
+    }
+
+    function Auth_Login() {
+        //
+    }
+</script>

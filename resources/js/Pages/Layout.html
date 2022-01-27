@@ -8,12 +8,51 @@
         <div class="message-body" x-text="notification"></div>
     </div>
 
-    <header class="hero is-link">
-        <div class="hero-body">
-            <h1 class="title" x-text="title"></h1>
-            <p class="subtitle" x-text="subtitle"></p>
+
+    <nav x-data="AlpineMainNav" class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" data-inertia-link href="/">
+                <img load=" lazy" src="https://avatars.githubusercontent.com/u/47703742?s=280&v=4" width="28"
+                    height="28">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                x-on:click="isActive = ! isActive">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
         </div>
-    </header>
+
+        <div id="main-navbar" x-bind:class="{'navbar-menu': true, 'is-active': isActive }">
+            <div class="navbar-start">
+                <a data-inertia-link href="/" class="navbar-item">
+                    Home
+                </a>
+
+                <a href="https://github.com/rogervila/inertia-html" class="navbar-item">
+                    Documentation
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a x-show="user === null" data-inertia-link href="/register" class="button is-link">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a x-show="user === null" data-inertia-link href="/login" class="button is-light">
+                            Log in
+                        </a>
+                        <button x-show="user !== null" data-inertia-link='{"method": "post", "href": "/logout"}'
+                            class="button is-light">
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="columns">
         <div class="column is-narrow">
@@ -46,6 +85,13 @@
 </div>
 
 <script>
+    function AlpineMainNav() {
+        return {
+            isActive: false,
+            user: Inertia.page.props.user
+        }
+    }
+
     function AlpineLayout() {
         return {
             init: function () {
@@ -62,7 +108,7 @@
             company: 'ACME',
             year: new Date().getFullYear(),
             showNotification: false,
-            notification: '',
+            notification: ''
         }
     }
 </script>

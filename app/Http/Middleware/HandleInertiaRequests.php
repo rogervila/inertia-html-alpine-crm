@@ -40,6 +40,9 @@ class HandleInertiaRequests extends Middleware
             'status' => function () use ($request) {
                 return $request->session()->get('status');
             },
+            'user' => function () use ($request) {
+                return $request->user();
+            }
         ]);
     }
 }

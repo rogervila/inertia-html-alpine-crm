@@ -1,0 +1,63 @@
+<div class="container is-fluid" data-inertia-extends="Layout">
+    <section class="section" x-data="AlpineRegister">
+        <h2 class="title">Register</h2>
+
+        <form x-on:submit="register">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="Your Name" x-model="name">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="email" placeholder="your@email.com" x-model="email">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="******" x-model="password">
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <input type="submit" class="button is-link" value="Register">
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+<script>
+    function AlpineRegister() {
+        return {
+            name: '',
+            email: '',
+            password: '',
+            register: function (e) {
+                e.preventDefault()
+
+                var name = this.name
+                var email = this.email
+                var password = this.password
+
+                this.name = ''
+                this.email = ''
+                this.password = ''
+
+                Inertia.post('/register', {
+                    name, email, password
+                })
+            }
+        }
+    }
+
+    function Auth_Register() {
+        //
+    }
+</script>
